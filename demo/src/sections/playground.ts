@@ -10,6 +10,7 @@ export function createPlayground(container: HTMLElement) {
   let hoverRadius = 0.15
   let hoverStrength = 0.5
   let hoverMomentum = 0.92
+  let voidRadius = 0.1
   let glowIntensity = 0.8
   let glowSpeed = 0.25
   let codeTab = 'vanilla'
@@ -62,6 +63,10 @@ export function createPlayground(container: HTMLElement) {
           <div class="pg-group">
             <div class="pg-label">HOVER MOMENTUM <span id="v-hoverMomentum">0.92</span></div>
             <input class="pg-slider" type="range" id="s-hoverMomentum" min="0" max="0.99" step="0.01" value="0.92">
+          </div>
+          <div class="pg-group">
+            <div class="pg-label">VOID RADIUS <span id="v-voidRadius">0.1</span></div>
+            <input class="pg-slider" type="range" id="s-voidRadius" min="0" max="0.5" step="0.01" value="0.1">
           </div>
           <div class="pg-group">
             <div class="pg-label">GLOW INTENSITY <span id="v-glowIntensity">0.8</span></div>
@@ -126,12 +131,13 @@ export function createPlayground(container: HTMLElement) {
   const sliders: [string, (v: number) => void][] = [
     ['dotSize', (v) => { dotSize = v; mesh.setDotSize(v) }],
     ['spacing', (v) => { spacing = v; mesh.setSpacing(v) }],
-    ['dotOpacity', (v) => { dotOpacity = v }],
-    ['hoverRadius', (v) => { hoverRadius = v }],
-    ['hoverStrength', (v) => { hoverStrength = v }],
-    ['hoverMomentum', (v) => { hoverMomentum = v }],
-    ['glowIntensity', (v) => { glowIntensity = v }],
-    ['glowSpeed', (v) => { glowSpeed = v }],
+    ['dotOpacity', (v) => { dotOpacity = v; mesh.setDotOpacity(v) }],
+    ['hoverRadius', (v) => { hoverRadius = v; mesh.setHoverRadius(v) }],
+    ['hoverStrength', (v) => { hoverStrength = v; mesh.setHoverStrength(v) }],
+    ['hoverMomentum', (v) => { hoverMomentum = v; mesh.setHoverMomentum(v) }],
+    ['voidRadius', (v) => { voidRadius = v; mesh.setVoidRadius(v) }],
+    ['glowIntensity', (v) => { glowIntensity = v; mesh.setGlowIntensity(v) }],
+    ['glowSpeed', (v) => { glowSpeed = v; mesh.setGlowSpeed(v) }],
   ]
 
   for (const [name, setter] of sliders) {
@@ -182,6 +188,7 @@ export function createPlayground(container: HTMLElement) {
     if (hoverRadius !== 0.15) lines.push('  hoverRadius: ' + hoverRadius + ',')
     if (hoverStrength !== 0.5) lines.push('  hoverStrength: ' + hoverStrength + ',')
     if (hoverMomentum !== 0.92) lines.push('  hoverMomentum: ' + hoverMomentum + ',')
+    if (voidRadius !== 0.1) lines.push('  voidRadius: ' + voidRadius + ',')
     if (glowIntensity !== 0.8) lines.push('  glowIntensity: ' + glowIntensity + ',')
     if (glowSpeed !== 0.25) lines.push('  glowSpeed: ' + glowSpeed + ',')
     return lines.length ? '{\n' + lines.join('\n') + '\n}' : ''

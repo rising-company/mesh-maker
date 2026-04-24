@@ -10,6 +10,7 @@ export interface MeshMakerOptions {
   hoverRadius?: number
   hoverStrength?: number
   hoverMomentum?: number
+  voidRadius?: number
   underlay?: boolean
   colors?: string[]
   glowIntensity?: number
@@ -34,6 +35,7 @@ export const DEFAULT_OPTIONS: Required<Omit<MeshMakerOptions, 'preset' | 'colors
   hoverRadius: 0.15,
   hoverStrength: 0.5,
   hoverMomentum: 0.92,
+  voidRadius: 0.1,
   underlay: true,
   glowIntensity: 0.8,
   glowSpeed: 0.25,

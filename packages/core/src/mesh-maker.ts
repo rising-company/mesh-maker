@@ -19,6 +19,7 @@ export interface ResolvedOptions {
   hoverRadius: number
   hoverStrength: number
   hoverMomentum: number
+  voidRadius: number
   underlay: boolean
   glowIntensity: number
   glowSpeed: number
@@ -47,6 +48,7 @@ export function resolveOptions(opts: MeshMakerOptions): ResolvedOptions {
     hoverRadius: opts.hoverRadius ?? pd.hoverRadius ?? DEFAULT_OPTIONS.hoverRadius,
     hoverStrength: opts.hoverStrength ?? pd.hoverStrength ?? DEFAULT_OPTIONS.hoverStrength,
     hoverMomentum: opts.hoverMomentum ?? pd.hoverMomentum ?? DEFAULT_OPTIONS.hoverMomentum,
+    voidRadius: opts.voidRadius ?? pd.voidRadius ?? DEFAULT_OPTIONS.voidRadius,
     underlay: opts.underlay ?? pd.underlay ?? DEFAULT_OPTIONS.underlay,
     glowIntensity: opts.glowIntensity ?? pd.glowIntensity ?? DEFAULT_OPTIONS.glowIntensity,
     glowSpeed: opts.glowSpeed ?? pd.glowSpeed ?? DEFAULT_OPTIONS.glowSpeed,
@@ -159,6 +161,40 @@ export class MeshMaker {
     this._options.spacing = spacing
   }
 
+  setDotOpacity(opacity: number): void {
+    this._options.dotOpacity = opacity
+    this._gl.uniform1f(this._uniforms.u_dot_opacity, opacity)
+  }
+
+  setHoverRadius(radius: number): void {
+    this._options.hoverRadius = radius
+    this._gl.uniform1f(this._uniforms.u_hover_radius, radius)
+  }
+
+  setHoverStrength(strength: number): void {
+    this._options.hoverStrength = strength
+    this._gl.uniform1f(this._uniforms.u_hover_strength, strength)
+  }
+
+  setHoverMomentum(momentum: number): void {
+    this._options.hoverMomentum = momentum
+  }
+
+  setVoidRadius(radius: number): void {
+    this._options.voidRadius = radius
+    this._gl.uniform1f(this._uniforms.u_void_radius, radius)
+  }
+
+  setGlowIntensity(intensity: number): void {
+    this._options.glowIntensity = intensity
+    this._gl.uniform1f(this._uniforms.u_glow_intensity, intensity)
+  }
+
+  setGlowSpeed(speed: number): void {
+    this._options.glowSpeed = speed
+    this._gl.uniform1f(this._uniforms.u_glow_speed, speed)
+  }
+
   setHover(enabled: boolean): void {
     this._options.hover = enabled
     if (enabled) {
@@ -190,7 +226,7 @@ export class MeshMaker {
     const names = [
       'u_time', 'u_resolution', 'u_mouse',
       'u_dot_size', 'u_spacing', 'u_dot_color', 'u_dot_opacity',
-      'u_hover', 'u_hover_radius', 'u_hover_strength',
+      'u_hover', 'u_hover_radius', 'u_hover_strength', 'u_void_radius',
       'u_underlay', 'u_glow_intensity', 'u_glow_speed',
       'u_glow_color_0', 'u_glow_color_1', 'u_glow_color_2', 'u_glow_color_3',
       'u_glow_color_count',
@@ -210,6 +246,7 @@ export class MeshMaker {
     gl.uniform1f(u.u_dot_opacity, o.dotOpacity)
     gl.uniform1f(u.u_hover_radius, o.hoverRadius)
     gl.uniform1f(u.u_hover_strength, o.hoverStrength)
+    gl.uniform1f(u.u_void_radius, o.voidRadius)
     gl.uniform1f(u.u_glow_intensity, o.glowIntensity)
     gl.uniform1f(u.u_glow_speed, o.glowSpeed)
 

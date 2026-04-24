@@ -30,6 +30,7 @@ uniform float u_dot_opacity;
 uniform float u_hover;
 uniform float u_hover_radius;
 uniform float u_hover_strength;
+uniform float u_void_radius;
 
 // Underlay
 uniform float u_underlay;
@@ -71,31 +72,43 @@ vec3 computeGradient(vec2 uv) {
   return color * u_glow_intensity * gradientMask;
 }
 
-// --- Noise warp UV distortion ---
+// --- Gravitational attraction (black hole) ---
 vec2 warpUV(vec2 uv) {
   float aspectRatio = u_resolution.x / u_resolution.y;
   vec2 aspect = vec2(aspectRatio, 1.0);
-  vec2 mouse = u_mouse;
 
-  float dist = distance(uv * aspect, mouse * aspect);
+  // Vector from mouse to pixel (outward)
+  vec2 delta = (uv - u_mouse) * aspect;
+  float dist = length(delta);
 
-  // Smooth circular falloff
   float influence = smoothstep(u_hover_radius, 0.0, dist);
-
   if (influence <= 0.001) return uv;
 
-  // 2D simplex noise — flat flow field, no 3D depth artifacts
-  // Two separate samples with offset seeds for x/y independence
-  float t = u_time * 0.04;
-  float nx = snoise(vec3(uv * 3.0, t));
-  float ny = snoise(vec3(uv * 3.0 + 100.0, t));
+  vec2 dir = delta / max(dist, 0.001);
 
-  vec2 displacement = vec2(nx, ny) * 0.018 * u_hover_strength;
+  // Hermite smoothstep — strong center pull, gentle edges
+  float pull = influence * influence * (3.0 - 2.0 * influence);
 
-  // Cubic falloff for extra-smooth edges
-  float smoothInfluence = influence * influence * (3.0 - 2.0 * influence);
+  // Warp UV outward — dots appear attracted toward mouse
+  vec2 attraction = (dir / aspect) * pull * u_hover_strength * 0.02;
 
-  return uv + displacement * smoothInfluence;
+  // Rotating ellipse distortion — small ellipse orbits near the void
+  float angle = u_time * 0.6;
+  float ca = cos(angle);
+  float sa = sin(angle);
+  vec2 rd = vec2(ca * delta.x - sa * delta.y, sa * delta.x + ca * delta.y);
+  rd *= vec2(1.0, 2.5); // flatten into ellipse
+  float eDist = length(rd);
+  float ellipseInfluence = smoothstep(u_void_radius * 5.0, 0.0, eDist);
+  vec2 ellipseDisp = (dir / aspect) * ellipseInfluence * u_hover_strength * 0.012;
+
+  // Subtle organic noise for liveliness
+  float t = u_time * 0.03;
+  float nx = snoise(vec3(uv * 2.5, t));
+  float ny = snoise(vec3(uv * 2.5 + 50.0, t));
+  vec2 noise = vec2(nx, ny) * 0.003 * influence;
+
+  return uv + attraction + noise + ellipseDisp;
 }
 
 // --- Dot grid mask ---
@@ -118,23 +131,33 @@ void main() {
 
   // Apply mouse warp to UV
   vec2 warpedUV = uv;
+  float voidMask = 1.0;
+  float mouseProximity = 0.0;
   if (u_hover > 0.5 && u_mouse.x >= 0.0) {
     warpedUV = warpUV(uv);
+
+    float ar = u_resolution.x / u_resolution.y;
+    vec2 d = (uv - u_mouse) * vec2(ar, 1.0);
+    float md = length(d);
+
+    // Black hole void — circular clear zone at cursor
+    voidMask = smoothstep(u_void_radius * 0.6, u_void_radius, md);
+
+    // Color intensifies near mouse (like Stitch)
+    mouseProximity = smoothstep(u_hover_radius, 0.0, md);
   }
 
   // Compute dot grid mask at warped position
   float dotMask = dotGrid(warpedUV);
 
-  // Compute gradient color (at original UV for stable color, warped for pattern)
-  vec3 gradientColor = u_underlay * computeGradient(uv);
+  // Gradient color — intensified near mouse cursor
+  vec3 gradientColor = u_underlay * computeGradient(uv) * (1.0 + mouseProximity * 3.0);
 
-  // The gradient is visible THROUGH the dots (halftone effect)
-  // Dots that overlap bright gradient areas are colorful
-  // Dots in dark areas show the base dot color at low opacity
+  // Base dot + gradient coloring
   vec3 baseDot = u_dot_color * u_dot_opacity;
   vec3 coloredDot = gradientColor + baseDot;
 
-  vec3 finalColor = coloredDot * dotMask;
+  vec3 finalColor = coloredDot * dotMask * voidMask;
 
   ${fragOut} = vec4(finalColor, 1.0);
 }
