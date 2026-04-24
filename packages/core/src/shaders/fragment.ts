@@ -79,23 +79,23 @@ vec2 warpUV(vec2 uv) {
 
   float dist = distance(uv * aspect, mouse * aspect);
 
-  // Two-zone influence: focused near cursor, gentle ripple further out
-  float innerRadius = u_hover_radius;
-  float outerRadius = u_hover_radius * 2.5;
-  float innerInfluence = smoothstep(innerRadius, 0.0, dist);
-  float outerInfluence = smoothstep(outerRadius, innerRadius * 0.8, dist) * 0.06;
-  float influence = innerInfluence + outerInfluence;
+  // Smooth circular falloff
+  float influence = smoothstep(u_hover_radius, 0.0, dist);
 
   if (influence <= 0.001) return uv;
 
-  // BCC noise produces smooth directional offset (not random scattering)
-  vec2 st = (uv - mouse) * aspect * 5.5;
-  vec4 noise = bcc_noise(vec3(st, u_time * 0.03));
+  // Low-frequency noise for gentle, flowing displacement
+  // Small scale = smooth, broad curves (not sharp spikes)
+  vec2 st = uv * 2.8;
+  vec4 noise = bcc_noise(vec3(st, u_time * 0.04));
 
-  // Use noise derivatives as a gentle displacement from original position
-  vec2 displacement = noise.xy * 0.035 * u_hover_strength;
+  // Very small displacement — dots shift 1-3 pixels, preserving grid structure
+  vec2 displacement = noise.xy * 0.006 * u_hover_strength;
 
-  return uv + displacement * influence;
+  // Cubic falloff for extra-smooth edges
+  float smoothInfluence = influence * influence * (3.0 - 2.0 * influence);
+
+  return uv + displacement * smoothInfluence;
 }
 
 // --- Dot grid mask ---
