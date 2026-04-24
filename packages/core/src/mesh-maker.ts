@@ -291,9 +291,9 @@ export class MeshMaker {
     const u = this._uniforms
     const o = this._options
 
-    // Smooth mouse position — high momentum = slow trailing = smooth recovery
-    const trackSpeed = 1.0 - o.hoverMomentum
-    const fadeSpeed = trackSpeed * 0.3 // leave-recovery is slower than tracking
+    // Tracking is responsive; recovery (mouse leave) uses hoverMomentum for smooth fadeout
+    const trackSpeed = 0.25 // fast enough to feel snappy, soft enough to avoid jitter
+    const fadeSpeed = 1.0 - o.hoverMomentum // hoverMomentum controls how slowly dots recover
     if (this._mouseTarget[0] >= 0) {
       this._mouseCurrent[0] += (this._mouseTarget[0] - this._mouseCurrent[0]) * trackSpeed
       this._mouseCurrent[1] += (this._mouseTarget[1] - this._mouseCurrent[1]) * trackSpeed
