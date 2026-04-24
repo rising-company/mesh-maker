@@ -7,9 +7,9 @@ export function createPlayground(container: HTMLElement) {
   let dotSize = 1.5
   let spacing = 20
   let dotOpacity = 0.15
-  let hoverRadius = 0.2
-  let hoverStrength = 0.5
-  let hoverMomentum = 0.12
+  let hoverRadius = 0.12
+  let hoverStrength = 0.45
+  let hoverMomentum = 0.15
   let glowIntensity = 0.8
   let glowSpeed = 0.25
   let codeTab = 'vanilla'
@@ -52,16 +52,16 @@ export function createPlayground(container: HTMLElement) {
             <input class="pg-slider" type="range" id="s-dotOpacity" min="0" max="1" step="0.05" value="0.15">
           </div>
           <div class="pg-group">
-            <div class="pg-label">HOVER RADIUS <span id="v-hoverRadius">0.2</span></div>
-            <input class="pg-slider" type="range" id="s-hoverRadius" min="0.05" max="0.5" step="0.01" value="0.2">
+            <div class="pg-label">HOVER RADIUS <span id="v-hoverRadius">0.12</span></div>
+            <input class="pg-slider" type="range" id="s-hoverRadius" min="0.05" max="0.35" step="0.01" value="0.12">
           </div>
           <div class="pg-group">
-            <div class="pg-label">HOVER STRENGTH <span id="v-hoverStrength">0.5</span></div>
-            <input class="pg-slider" type="range" id="s-hoverStrength" min="0" max="1" step="0.05" value="0.5">
+            <div class="pg-label">HOVER STRENGTH <span id="v-hoverStrength">0.45</span></div>
+            <input class="pg-slider" type="range" id="s-hoverStrength" min="0" max="1" step="0.05" value="0.45">
           </div>
           <div class="pg-group">
-            <div class="pg-label">HOVER MOMENTUM <span id="v-hoverMomentum">0.12</span></div>
-            <input class="pg-slider" type="range" id="s-hoverMomentum" min="0" max="0.95" step="0.05" value="0.12">
+            <div class="pg-label">HOVER MOMENTUM <span id="v-hoverMomentum">0.15</span></div>
+            <input class="pg-slider" type="range" id="s-hoverMomentum" min="0" max="0.95" step="0.05" value="0.15">
           </div>
           <div class="pg-group">
             <div class="pg-label">GLOW INTENSITY <span id="v-glowIntensity">0.8</span></div>
@@ -179,9 +179,9 @@ export function createPlayground(container: HTMLElement) {
     if (dotSize !== 1.5) lines.push('  dotSize: ' + dotSize + ',')
     if (spacing !== 20) lines.push('  spacing: ' + spacing + ',')
     if (dotOpacity !== 0.15) lines.push('  dotOpacity: ' + dotOpacity + ',')
-    if (hoverRadius !== 0.2) lines.push('  hoverRadius: ' + hoverRadius + ',')
-    if (hoverStrength !== 0.5) lines.push('  hoverStrength: ' + hoverStrength + ',')
-    if (hoverMomentum !== 0.12) lines.push('  hoverMomentum: ' + hoverMomentum + ',')
+    if (hoverRadius !== 0.12) lines.push('  hoverRadius: ' + hoverRadius + ',')
+    if (hoverStrength !== 0.45) lines.push('  hoverStrength: ' + hoverStrength + ',')
+    if (hoverMomentum !== 0.15) lines.push('  hoverMomentum: ' + hoverMomentum + ',')
     if (glowIntensity !== 0.8) lines.push('  glowIntensity: ' + glowIntensity + ',')
     if (glowSpeed !== 0.25) lines.push('  glowSpeed: ' + glowSpeed + ',')
     return lines.length ? '{\n' + lines.join('\n') + '\n}' : ''

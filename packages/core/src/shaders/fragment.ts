@@ -79,11 +79,11 @@ vec2 warpUV(vec2 uv) {
 
   float dist = distance(uv * aspect, mouse * aspect);
 
-  // Two-zone influence: strong near cursor, subtle far out
+  // Two-zone influence: focused near cursor, gentle ripple further out
   float innerRadius = u_hover_radius;
-  float outerRadius = u_hover_radius * 4.0; // spread extends much further
+  float outerRadius = u_hover_radius * 2.5;
   float innerInfluence = smoothstep(innerRadius, 0.0, dist);
-  float outerInfluence = smoothstep(outerRadius, innerRadius * 0.5, dist) * 0.15;
+  float outerInfluence = smoothstep(outerRadius, innerRadius * 0.8, dist) * 0.06;
   float influence = innerInfluence + outerInfluence;
 
   if (influence <= 0.001) return uv;
