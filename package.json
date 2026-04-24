@@ -4,7 +4,7 @@
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
-    "dev": "pnpm --filter demo dev"
+    "dev": "pnpm --filter mesh-maker-demo dev"
   },
   "devDependencies": {
     "typescript": "^5.7.0"
