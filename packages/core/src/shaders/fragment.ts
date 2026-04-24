@@ -71,7 +71,7 @@ vec3 computeGradient(vec2 uv) {
   return color * u_glow_intensity * gradientMask;
 }
 
-// --- Noise warp UV distortion (wide spread) ---
+// --- Noise warp UV distortion ---
 vec2 warpUV(vec2 uv) {
   float aspectRatio = u_resolution.x / u_resolution.y;
   vec2 aspect = vec2(aspectRatio, 1.0);
@@ -88,12 +88,14 @@ vec2 warpUV(vec2 uv) {
 
   if (influence <= 0.001) return uv;
 
-  // BCC noise-based warp
-  vec2 st = (uv - mouse) * aspect * 12.0 * 0.46;
-  vec4 noise = bcc_noise(vec3(st * 0.7, u_time * 0.02));
-  vec2 offset = noise.xy / 7.0 + 0.5;
+  // BCC noise produces smooth directional offset (not random scattering)
+  vec2 st = (uv - mouse) * aspect * 5.5;
+  vec4 noise = bcc_noise(vec3(st, u_time * 0.03));
 
-  return mix(uv, offset, influence * u_hover_strength);
+  // Use noise derivatives as a gentle displacement from original position
+  vec2 displacement = noise.xy * 0.035 * u_hover_strength;
+
+  return uv + displacement * influence;
 }
 
 // --- Dot grid mask ---
