@@ -1,15 +1,35 @@
 import { MeshMaker } from '@rising-company/mesh-maker-core'
 
-export function createHero(container: HTMLElement) {
+export function createHero(container: HTMLElement): void {
   container.innerHTML = `
-    <div class="section section--hero">
-      <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
-      <div class="overlay">
-        <h1>mesh-maker</h1>
-        <p>Interactive WebGL dot mesh for the web</p>
+    <section class="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-content">
+        <div class="hero-eyebrow">// Interactive Dot Mesh</div>
+        <h1 class="hero-title">Mesh-Maker</h1>
+        <p class="hero-subtitle">Halftone dot mesh with mouse distortion &mdash; zero dependencies</p>
+        <code class="hero-install">npm i @rising-company/mesh-maker-core</code>
       </div>
-    </div>
+      <div class="hero-stats">
+        <div class="stat-row">
+          <div class="stat-label">Renderer</div>
+          <div class="stat-value">WEBGL 2.0</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Dependencies</div>
+          <div class="stat-value">ZERO</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Frameworks</div>
+          <div class="stat-value">REACT &middot; VUE &middot; SVELTE</div>
+        </div>
+      </div>
+      <div class="hero-controls-hint">
+        <p><span>HOVER</span> &mdash; Distort</p>
+        <p><span>SCROLL</span> &mdash; Explore</p>
+      </div>
+    </section>
   `
-  const canvas = container.querySelector('#hero-canvas') as HTMLCanvasElement
+  const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement
   new MeshMaker(canvas, { preset: 'stitch' })
 }
