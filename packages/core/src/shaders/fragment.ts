@@ -84,13 +84,13 @@ vec2 warpUV(vec2 uv) {
 
   if (influence <= 0.001) return uv;
 
-  // Low-frequency noise for gentle, flowing displacement
-  // Small scale = smooth, broad curves (not sharp spikes)
-  vec2 st = uv * 2.8;
-  vec4 noise = bcc_noise(vec3(st, u_time * 0.04));
+  // 2D simplex noise — flat flow field, no 3D depth artifacts
+  // Two separate samples with offset seeds for x/y independence
+  float t = u_time * 0.04;
+  float nx = snoise(vec3(uv * 3.0, t));
+  float ny = snoise(vec3(uv * 3.0 + 100.0, t));
 
-  // Moderate displacement — dots shift noticeably but grid structure is preserved
-  vec2 displacement = noise.xy * 0.018 * u_hover_strength;
+  vec2 displacement = vec2(nx, ny) * 0.018 * u_hover_strength;
 
   // Cubic falloff for extra-smooth edges
   float smoothInfluence = influence * influence * (3.0 - 2.0 * influence);
