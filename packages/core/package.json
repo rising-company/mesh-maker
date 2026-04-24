@@ -1,0 +1,34 @@
+{
+  "name": "@rising-company/mesh-maker-core",
+  "version": "0.1.0",
+  "description": "Interactive WebGL dot mesh grid with mouse distortion",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": ["webgl", "mesh", "dots", "grid", "animation", "shader", "interactive"],
+  "license": "MIT",
+  "devDependencies": {
+    "jsdom": "^29.0.2",
+    "tsup": "^8.0.0",
+    "vitest": "^3.0.0"
+  }
+}
