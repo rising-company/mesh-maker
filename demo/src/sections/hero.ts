@@ -8,7 +8,18 @@ export function createHero(container: HTMLElement): void {
         <div class="hero-eyebrow">// Interactive Dot Mesh</div>
         <h1 class="hero-title">Mesh-Maker</h1>
         <p class="hero-subtitle">Halftone dot mesh with mouse distortion &mdash; zero dependencies</p>
-        <code class="hero-install">npm i @rising-company/mesh-maker-core</code>
+        <div class="hero-install-section">
+          <div class="hero-install-tabs">
+            <button class="hero-install-tab hero-install-tab--active" data-pkg="core">Core</button>
+            <button class="hero-install-tab" data-pkg="react">React</button>
+            <button class="hero-install-tab" data-pkg="vue">Vue</button>
+            <button class="hero-install-tab" data-pkg="svelte">Svelte</button>
+          </div>
+          <div class="hero-install-code">
+            <code id="hero-install-cmd">npm i @rising-company/mesh-maker-core</code>
+            <button class="hero-install-copy" id="hero-copy">Copy</button>
+          </div>
+        </div>
       </div>
       <div class="hero-stats">
         <div class="stat-row">
@@ -32,4 +43,30 @@ export function createHero(container: HTMLElement): void {
   `
   const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement
   new MeshMaker(canvas, { preset: 'stitch' })
+
+  const packages: Record<string, string> = {
+    core: 'npm i @rising-company/mesh-maker-core',
+    react: 'npm i @rising-company/mesh-maker-react',
+    vue: 'npm i @rising-company/mesh-maker-vue',
+    svelte: 'npm i @rising-company/mesh-maker-svelte',
+  }
+
+  const installCmd = document.getElementById('hero-install-cmd')!
+  const tabs = container.querySelectorAll('.hero-install-tab')
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('hero-install-tab--active'))
+      tab.classList.add('hero-install-tab--active')
+      installCmd.textContent = packages[(tab as HTMLElement).dataset.pkg!]
+    })
+  })
+
+  const copyBtn = document.getElementById('hero-copy')!
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(installCmd.textContent ?? '').then(() => {
+      copyBtn.textContent = 'Copied!'
+      setTimeout(() => { copyBtn.textContent = 'Copy' }, 2000)
+    })
+  })
 }
