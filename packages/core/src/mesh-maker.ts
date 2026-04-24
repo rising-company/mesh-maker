@@ -291,14 +291,16 @@ export class MeshMaker {
     const u = this._uniforms
     const o = this._options
 
-    // Smooth mouse position
-    const momentum = 1.0 - o.hoverMomentum
+    // Smooth mouse position — high momentum = slow trailing = smooth recovery
+    const trackSpeed = 1.0 - o.hoverMomentum
+    const fadeSpeed = trackSpeed * 0.3 // leave-recovery is slower than tracking
     if (this._mouseTarget[0] >= 0) {
-      this._mouseCurrent[0] += (this._mouseTarget[0] - this._mouseCurrent[0]) * momentum
-      this._mouseCurrent[1] += (this._mouseTarget[1] - this._mouseCurrent[1]) * momentum
+      this._mouseCurrent[0] += (this._mouseTarget[0] - this._mouseCurrent[0]) * trackSpeed
+      this._mouseCurrent[1] += (this._mouseTarget[1] - this._mouseCurrent[1]) * trackSpeed
     } else if (this._mouseCurrent[0] >= 0) {
-      this._mouseCurrent[0] += (-1 - this._mouseCurrent[0]) * 0.05
-      this._mouseCurrent[1] += (-1 - this._mouseCurrent[1]) * 0.05
+      // Gradually ease back to off-screen (smooth recovery)
+      this._mouseCurrent[0] += (-1 - this._mouseCurrent[0]) * fadeSpeed
+      this._mouseCurrent[1] += (-1 - this._mouseCurrent[1]) * fadeSpeed
       if (this._mouseCurrent[0] < -0.5) {
         this._mouseCurrent = [-1, -1]
       }

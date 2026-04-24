@@ -89,8 +89,8 @@ vec2 warpUV(vec2 uv) {
   vec2 st = uv * 2.8;
   vec4 noise = bcc_noise(vec3(st, u_time * 0.04));
 
-  // Very small displacement — dots shift 1-3 pixels, preserving grid structure
-  vec2 displacement = noise.xy * 0.006 * u_hover_strength;
+  // Moderate displacement — dots shift noticeably but grid structure is preserved
+  vec2 displacement = noise.xy * 0.018 * u_hover_strength;
 
   // Cubic falloff for extra-smooth edges
   float smoothInfluence = influence * influence * (3.0 - 2.0 * influence);

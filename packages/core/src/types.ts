@@ -26,14 +26,14 @@ export interface Preset {
 }
 
 export const DEFAULT_OPTIONS: Required<Omit<MeshMakerOptions, 'preset' | 'colors'>> = {
-  dotSize: 1.5,
-  spacing: 20,
+  dotSize: 1.2,
+  spacing: 28,
   dotColor: '#ffffff',
-  dotOpacity: 0.15,
+  dotOpacity: 0.25,
   hover: true,
-  hoverRadius: 0.12,
-  hoverStrength: 0.45,
-  hoverMomentum: 0.15,
+  hoverRadius: 0.15,
+  hoverStrength: 0.5,
+  hoverMomentum: 0.92,
   underlay: true,
   glowIntensity: 0.8,
   glowSpeed: 0.25,
