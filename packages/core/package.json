@@ -1,7 +1,8 @@
 {
   "name": "@rising-company/mesh-maker-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Interactive WebGL dot mesh grid with mouse distortion",
+  "author": "Ben Cao <ben@rising.company>",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -24,8 +25,42 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "keywords": ["webgl", "mesh", "dots", "grid", "animation", "shader", "interactive"],
+  "keywords": [
+    "webgl",
+    "mesh",
+    "mesh-grid",
+    "dot-grid",
+    "dots",
+    "grid",
+    "interactive",
+    "mouse-effect",
+    "hover-effect",
+    "animation",
+    "animated-background",
+    "background",
+    "hero",
+    "hero-section",
+    "canvas",
+    "shader",
+    "glsl",
+    "fragment-shader",
+    "gpu",
+    "generative",
+    "procedural",
+    "visual-effects",
+    "ui"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rising-company/mesh-maker.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/rising-company/mesh-maker#readme",
+  "bugs": "https://github.com/rising-company/mesh-maker/issues",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "jsdom": "^29.0.2",
     "tsup": "^8.0.0",

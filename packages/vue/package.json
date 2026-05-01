@@ -1,7 +1,8 @@
 {
   "name": "@rising-company/mesh-maker-vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue component for mesh-maker WebGL dot grid",
+  "author": "Ben Cao <ben@rising.company>",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -14,7 +15,42 @@
   },
   "files": ["dist", "src"],
   "scripts": { "build": "tsup" },
+  "keywords": [
+    "vue",
+    "vue3",
+    "vue-component",
+    "vue-mesh",
+    "webgl",
+    "mesh",
+    "mesh-grid",
+    "dot-grid",
+    "dots",
+    "grid",
+    "interactive",
+    "mouse-effect",
+    "hover-effect",
+    "animation",
+    "animated-background",
+    "background",
+    "hero",
+    "hero-section",
+    "canvas",
+    "shader",
+    "glsl",
+    "visual-effects",
+    "ui"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rising-company/mesh-maker.git",
+    "directory": "packages/vue"
+  },
+  "homepage": "https://github.com/rising-company/mesh-maker#readme",
+  "bugs": "https://github.com/rising-company/mesh-maker/issues",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "vue": "^3.3.0" },
   "devDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "vue": "^3.5.0", "tsup": "^8.0.0" }
 }

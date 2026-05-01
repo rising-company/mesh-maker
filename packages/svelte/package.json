@@ -1,7 +1,8 @@
 {
   "name": "@rising-company/mesh-maker-svelte",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte component for mesh-maker WebGL dot grid",
+  "author": "Ben Cao <ben@rising.company>",
   "type": "module",
   "svelte": "./src/index.ts",
   "main": "./src/index.ts",
@@ -12,7 +13,42 @@
   },
   "files": ["src"],
   "scripts": { "build": "echo 'Svelte components are compiled by the consumer bundler'" },
+  "keywords": [
+    "svelte",
+    "svelte5",
+    "svelte-component",
+    "svelte-mesh",
+    "webgl",
+    "mesh",
+    "mesh-grid",
+    "dot-grid",
+    "dots",
+    "grid",
+    "interactive",
+    "mouse-effect",
+    "hover-effect",
+    "animation",
+    "animated-background",
+    "background",
+    "hero",
+    "hero-section",
+    "canvas",
+    "shader",
+    "glsl",
+    "visual-effects",
+    "ui"
+  ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rising-company/mesh-maker.git",
+    "directory": "packages/svelte"
+  },
+  "homepage": "https://github.com/rising-company/mesh-maker#readme",
+  "bugs": "https://github.com/rising-company/mesh-maker/issues",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "svelte": "^5.0.0" },
   "devDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "svelte": "^5.0.0", "tsup": "^8.0.0" }
 }
