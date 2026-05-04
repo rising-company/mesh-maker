@@ -27,7 +27,7 @@ app.appendChild(playgroundContainer)
 // Footer
 const footer = document.createElement('footer')
 footer.className = 'site-footer'
-footer.innerHTML = '// mesh-maker &mdash; rising company &middot; webgl dot mesh &middot; open source'
+footer.innerHTML = '// mesh-maker &mdash; <a href="https://rising.company" target="_blank" rel="noopener noreferrer">rising company</a> &middot; webgl dot mesh &middot; open source'
 app.appendChild(footer)
 
 createHero(heroContainer)
