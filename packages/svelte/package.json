@@ -50,5 +50,5 @@
     "access": "public"
   },
   "peerDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "svelte": "^5.0.0" },
-  "devDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "svelte": "^5.0.0", "tsup": "^8.0.0" }
+  "devDependencies": { "@rising-company/mesh-maker-core": "workspace:*", "svelte": "^5.55.7", "tsup": "^8.0.0" }
 }
