@@ -36,8 +36,8 @@ export function createPlayground(container: HTMLElement) {
           <div class="pg-group">
             <div class="pg-label">FEATURES</div>
             <div class="pg-btn-group">
-              <button class="pg-btn pg-btn--active" id="toggle-hover">HOVER ON</button>
-              <button class="pg-btn pg-btn--active" id="toggle-underlay">GLOW ON</button>
+              <button class="pg-btn pg-btn--active" id="toggle-hover">Hover on</button>
+              <button class="pg-btn pg-btn--active" id="toggle-underlay">Glow on</button>
             </div>
           </div>
           <div class="pg-group">
@@ -82,7 +82,7 @@ export function createPlayground(container: HTMLElement) {
       <div class="pg-code-section">
         <div class="pg-tabs" id="code-tabs"></div>
         <div class="pg-code-wrapper">
-          <button class="pg-copy-btn" id="copy-btn">COPY</button>
+          <button class="pg-copy-btn" id="copy-btn">Copy</button>
           <pre class="pg-code" id="code-content"></pre>
         </div>
       </div>
@@ -97,7 +97,7 @@ export function createPlayground(container: HTMLElement) {
   for (const name of presetNames) {
     const btn = document.createElement('button')
     btn.className = 'pg-btn' + (name === currentPreset ? ' pg-btn--active' : '')
-    btn.textContent = name.toUpperCase()
+    btn.textContent = name.charAt(0).toUpperCase() + name.slice(1)
     btn.onclick = () => {
       currentPreset = name
       mesh.setPreset(name)
@@ -113,7 +113,7 @@ export function createPlayground(container: HTMLElement) {
   hoverBtn.onclick = () => {
     hover = !hover
     mesh.setHover(hover)
-    hoverBtn.textContent = hover ? 'HOVER ON' : 'HOVER OFF'
+    hoverBtn.textContent = hover ? 'Hover on' : 'Hover off'
     hoverBtn.classList.toggle('pg-btn--active', hover)
     updateCode()
   }
@@ -122,7 +122,7 @@ export function createPlayground(container: HTMLElement) {
   underlayBtn.onclick = () => {
     underlay = !underlay
     mesh.setUnderlay(underlay)
-    underlayBtn.textContent = underlay ? 'GLOW ON' : 'GLOW OFF'
+    underlayBtn.textContent = underlay ? 'Glow on' : 'Glow off'
     underlayBtn.classList.toggle('pg-btn--active', underlay)
     updateCode()
   }
@@ -173,8 +173,8 @@ export function createPlayground(container: HTMLElement) {
   const copyBtn = container.querySelector('#copy-btn') as HTMLButtonElement
   copyBtn.onclick = () => {
     navigator.clipboard.writeText(codeContent.textContent || '')
-    copyBtn.textContent = 'COPIED'
-    setTimeout(() => { copyBtn.textContent = 'COPY' }, 1500)
+    copyBtn.textContent = 'Copied'
+    setTimeout(() => { copyBtn.textContent = 'Copy' }, 1500)
   }
 
   function generateOpts(): string {
